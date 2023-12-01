@@ -76,18 +76,8 @@ export const Post = (props) => {
               width={90}
               height={90}
               style={{ borderRadius: "90px" }}
-              onClick={() => {
-                navigate("/user");
-              }}
             />
-            <p
-              className="username1"
-              onClick={() => {
-                navigate("/user");
-              }}
-            >
-              {post.username}
-            </p>
+            <p className="username1">{post.username}</p>
           </div>
         </div>
 
@@ -101,49 +91,6 @@ export const Post = (props) => {
             {hasUserLiked ? <HeartFill size={18} /> : <Heart size={18} />}
           </button>
           {likes && <p>{likes.length}</p>}
-        </div>
-      </div>
-
-      <div className="post1">
-        {/* Post içeriği */}
-        <div className="user-info-container1">
-          {/* Kullanıcı bilgisi ve resmi */}
-          <div className="user-info1">
-            <img
-              src={"https://picsum.photos/200"}
-              width={90}
-              height={90}
-              style={{ borderRadius: "90px" }}
-              onClick={() => {
-                navigate("/user");
-                // setClickedProfile(post.userId); // Eğer bu fonksiyon tanımlıysa
-              }}
-            />
-            <p
-              className="username1"
-              onClick={() => {
-                navigate("/user");
-                // setClickedProfile(post.userId); // Eğer bu fonksiyon tanımlıysa
-              }}
-            >
-              Samet Çağlar Ergün
-            </p>
-          </div>
-        </div>
-
-        <div className="body1">
-          {/* Post açıklaması */}
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis
-            perferendis alias commodi officia rerum, voluptates aliquam vero
-            iusto tempora nobis voluptate debitis molestias aut neque error
-            deserunt dolore doloribus aperiam?
-          </p>
-        </div>
-        <div className="footer1">
-          {/* Like butonu ve sayısı */}
-          <button>{<HeartFill size={18} />}</button>
-          <p>1</p>
         </div>
       </div>
     </div>

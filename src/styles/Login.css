@@ -2,11 +2,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 40px;
   font-size: 1.7rem;
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #80d0c7 0%, #0093e9 100%);
+  padding: 50px;
+  border-radius: 10px;
+  border: 2px solid #80d0c7;
+}
+
+.login-container p {
+  color: #ffffff;
 }
 
 .login-container button {
+  display: flex;
   font-size: 1.2rem;
   height: 2.5rem;
   width: 15rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: #ffffff;
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #80d0c7 0%, #0093e9 100%);
+  border: 2px solid #80d0c7;
+  border-radius: 3px;
+  cursor: pointer;
 }

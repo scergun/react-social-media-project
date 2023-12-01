@@ -3,6 +3,7 @@ import { auth, provider } from "../config/firebase";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Google } from "react-bootstrap-icons";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -17,12 +18,11 @@ export const Login = () => {
 
   return (
     <div className="login-container">
-      <p>Sign In With Google To Continue</p>
-      <button onClick={signInWithGoogle}>Sign In With Google</button>
-      <div>
-        <p> {user?.displayName}</p>
-        <img src={user?.photoURL} width={100} height={100} />
-      </div>
+      <p> Sign In With Google To Continue</p>
+      <button onClick={signInWithGoogle}>
+        <Google />
+        Sign In With Google
+      </button>
     </div>
   );
 };

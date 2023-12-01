@@ -4,12 +4,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import "../styles/Navbar.css";
 import { HouseFill, PlusSquareFill, PersonCircle } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   const signUserOut = async () => {
     await signOut(auth);
+    navigate("/login");
   };
 
   const userName = user?.displayName.slice(0, user?.displayName.indexOf(" "));
