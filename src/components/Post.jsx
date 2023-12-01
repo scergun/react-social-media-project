@@ -87,7 +87,11 @@ export const Post = (props) => {
           </div>
         </div>
         <div className="footer1">
-          <button onClick={hasUserLiked ? removeLike : addLike}>
+          <button
+            onClick={() =>
+              user ? (hasUserLiked ? removeLike : addLike) : navigate("/login")
+            }
+          >
             {hasUserLiked ? <HeartFill size={18} /> : <Heart size={18} />}
           </button>
           {likes && <p>{likes.length}</p>}
