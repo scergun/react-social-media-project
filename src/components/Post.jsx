@@ -10,13 +10,12 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../config/firebase"; // Yolunuzun doğru olduğundan emin olun
+import { auth, db } from "../config/firebase";
 import "../styles/Post.css";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 
-export const Post = (props) => {
-  const { post } = props;
+export const Post = ({ post }) => {
   const [user] = useAuthState(auth);
   const [likes, setLikes] = useState([]);
   const navigate = useNavigate();
@@ -38,9 +37,13 @@ export const Post = (props) => {
   }, [post.id]);
 
   const addLike = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     try {
       await addDoc(collection(db, "likes"), {
-        userId: user?.uid,
+        userId: user.uid,
         postId: post.id,
       });
     } catch (err) {
@@ -49,6 +52,10 @@ export const Post = (props) => {
   };
 
   const removeLike = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     try {
       const likeToDeleteQuery = query(
         collection(db, "likes"),
@@ -56,9 +63,10 @@ export const Post = (props) => {
         where("userId", "==", user.uid)
       );
       const likeToDeleteData = await getDocs(likeToDeleteQuery);
-      const likeId = likeToDeleteData.docs[0].id;
-
-      await deleteDoc(doc(db, "likes", likeId));
+      if (!likeToDeleteData.empty) {
+        const likeId = likeToDeleteData.docs[0].id;
+        await deleteDoc(doc(db, "likes", likeId));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -67,35 +75,29 @@ export const Post = (props) => {
   const hasUserLiked = likes?.some((like) => like.userId === user?.uid);
 
   return (
-    <div>
-      <div className="post1">
-        <div className="user-info-container1">
-          <div className="user-info1">
-            <img
-              src={post.userImg}
-              width={90}
-              height={90}
-              style={{ borderRadius: "90px" }}
-            />
-            <p className="username1">{post.username}</p>
-          </div>
+    <div className="post1">
+      <div className="user-info-container1">
+        <div className="user-info1">
+          <img
+            src={post.userImg}
+            width={90}
+            height={90}
+            style={{ borderRadius: "90px" }}
+          />
+          <p className="username1">{post.username}</p>
         </div>
+      </div>
 
-        <div className="body-container">
-          <div className="body1">
-            <p>{post.description}</p>
-          </div>
+      <div className="body-container">
+        <div className="body1">
+          <p>{post.description}</p>
         </div>
-        <div className="footer1">
-          <button
-            onClick={() =>
-              user ? (hasUserLiked ? removeLike : addLike) : navigate("/login")
-            }
-          >
-            {hasUserLiked ? <HeartFill size={18} /> : <Heart size={18} />}
-          </button>
-          {likes && <p>{likes.length}</p>}
-        </div>
+      </div>
+      <div className="footer1">
+        <button onClick={hasUserLiked ? removeLike : addLike}>
+          {hasUserLiked ? <HeartFill size={18} /> : <Heart size={18} />}
+        </button>
+        <p>{likes.length}</p>
       </div>
     </div>
   );
